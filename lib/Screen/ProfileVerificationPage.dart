@@ -17,10 +17,39 @@ class _ProfileVerificationPageState extends State<ProfileVerificationPage> {
   // bool? _isDifferentlyAbled = false;
   String? _isDifferentlyAbled = 'No';
   int _selectedIndex = 0;
+  bool _isFormValid = true;
+
+  final TextEditingController _birthStateController = TextEditingController();
+  final TextEditingController _birthCityController = TextEditingController();
+  final TextEditingController _pincodeController = TextEditingController();
+
+  @override
+  void dispose() {
+    _birthStateController.dispose();
+    _birthCityController.dispose();
+    _pincodeController.dispose();
+    super.dispose();
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  void _onContinuePressed() {
+    if (formKey.currentState?.validate() == true &&
+        _isDifferentlyAbled != null) {
+      setState(() {
+        _isFormValid = true;
+      });
+      // All validations passed, proceed with form submission
+      print('Form is valid');
+    } else {
+      setState(() {
+        _isFormValid = false;
+      });
+    }
   }
 
   @override
@@ -38,12 +67,12 @@ class _ProfileVerificationPageState extends State<ProfileVerificationPage> {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: Color(0xffECF5FF),
+              color: const Color(0xffECF5FF),
             ),
             //  height: screenWidth * 0.09,
             //  width: screenWidth * 0.09,
             child: IconButton(
-              icon: Icon(Icons.menu, color: Colors.black),
+              icon: const Icon(Icons.menu, color: Colors.black),
               onPressed: () {},
             ),
           ),
@@ -62,7 +91,7 @@ class _ProfileVerificationPageState extends State<ProfileVerificationPage> {
           Stack(
             children: [
               IconButton(
-                icon: Icon(Icons.notifications_outlined, color: Colors.black),
+                icon: const Icon(Icons.notifications_outlined, color: Colors.black),
                 onPressed: () {},
               ),
               Positioned(
@@ -70,11 +99,11 @@ class _ProfileVerificationPageState extends State<ProfileVerificationPage> {
                 top: screenHeight * 0.01,
                 child: CircleAvatar(
                   radius: screenWidth * 0.02,
-                  backgroundColor: Color(0xffDBE4FF),
+                  backgroundColor: const Color(0xffDBE4FF),
                   child: Text(
                     '3',
                     style: TextStyle(
-                      color: Color(0xff0F3CC9),
+                      color: const Color(0xff0F3CC9),
                       fontSize: 10 * fontScale,
                       fontWeight: FontWeight.w500,
                     ),
@@ -92,7 +121,7 @@ class _ProfileVerificationPageState extends State<ProfileVerificationPage> {
             children: [
               SizedBox(
                 height: screenHeight * 0.24,
-                child: Circularprogress(progress: 25),
+                child: const Circularprogress(progress: 25),
               ),
               SizedBox(height: screenHeight * 0.01),
               horizontalLine(context),
@@ -106,7 +135,7 @@ class _ProfileVerificationPageState extends State<ProfileVerificationPage> {
                     style: GoogleFonts.poppins(
                       fontSize: 20 * fontScale,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xff0F3CC9),
+                      color: const Color(0xff0F3CC9),
                     ),
                   ),
                 ),
@@ -118,18 +147,18 @@ class _ProfileVerificationPageState extends State<ProfileVerificationPage> {
                   children: [
                     Expanded(
                       child: TextFormField(
-                        //controller: _birthStateController,
+                        controller: _birthStateController,
                         decoration: InputDecoration(
                           labelText: 'Birth State',
                           hintText: 'eg: West Bengal',
-                          labelStyle: TextStyle(
-                            color: Color(0xff0F3CC9),
+                          labelStyle: GoogleFonts.poppins(
+                            color: const Color(0xff0F3CC9),
                             fontSize: 14 * fontScale,
                             fontWeight: FontWeight.w600,
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Color(0xff0056D6)),
+                            borderSide: const BorderSide(color: Color(0xff0056D6)),
                           ),
                         ),
                         validator: (value) {
@@ -143,19 +172,19 @@ class _ProfileVerificationPageState extends State<ProfileVerificationPage> {
                     SizedBox(width: screenWidth * 0.02),
                     Expanded(
                       child: TextFormField(
-                        // controller: _birthCityController,
+                        controller: _birthCityController,
                         decoration: InputDecoration(
                           alignLabelWithHint: true,
                           labelText: 'Birth City',
                           hintText: 'eg: Kolkata',
-                          labelStyle: TextStyle(
-                            color: Color(0xff0F3CC9),
+                          labelStyle: GoogleFonts.poppins(
+                            color: const Color(0xff0F3CC9),
                             fontSize: 14 * fontScale,
                             fontWeight: FontWeight.w600,
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Color(0xff0056D6)),
+                            borderSide: const BorderSide(color: Color(0xff0056D6)),
                           ),
                         ),
                         validator: (value) {
@@ -183,15 +212,15 @@ class _ProfileVerificationPageState extends State<ProfileVerificationPage> {
                               readOnly: true,
                               decoration: InputDecoration(
                                 labelText: 'Are you differently abled?',
-                                labelStyle: TextStyle(
-                                  color: Color(0xff0F3CC9),
+                                labelStyle: GoogleFonts.poppins(
+                                  color: const Color(0xff0F3CC9),
                                   fontSize: 12 * fontScale,
                                   fontWeight: FontWeight.w600,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide:
-                                      BorderSide(color: Color(0xff0056D6)),
+                                      const BorderSide(color: Color(0xff0056D6)),
                                 ),
                                 prefixIcon: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -199,7 +228,7 @@ class _ProfileVerificationPageState extends State<ProfileVerificationPage> {
                                     Radio<String>(
                                       value: 'No',
                                       groupValue: _isDifferentlyAbled,
-                                      activeColor: Color(0xff0F3CC9),
+                                      activeColor: const Color(0xff0F3CC9),
                                       onChanged: (value) {
                                         setState(() {
                                           _isDifferentlyAbled = value;
@@ -220,7 +249,7 @@ class _ProfileVerificationPageState extends State<ProfileVerificationPage> {
                                     Radio<String>(
                                       value: 'Yes',
                                       groupValue: _isDifferentlyAbled,
-                                      activeColor: Color(0xff0F3CC9),
+                                      activeColor: const Color(0xff0F3CC9),
                                       onChanged: (value) {
                                         setState(() {
                                           _isDifferentlyAbled = value;
@@ -239,12 +268,12 @@ class _ProfileVerificationPageState extends State<ProfileVerificationPage> {
                                   ],
                                 ),
                               ),
-                             validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return '';
-                          }
-                          //return null;
-                        },
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return '';
+                                }
+                                return null;
+                              },
                             ),
                           ],
                         ),
@@ -252,7 +281,7 @@ class _ProfileVerificationPageState extends State<ProfileVerificationPage> {
                       SizedBox(width: screenWidth * 0.02),
                       Expanded(
                         child: TextFormField(
-                          //  controller: _pincodeController,
+                           controller: _pincodeController,
                           keyboardType: TextInputType.number,
                           inputFormatters: <TextInputFormatter>[
                             FilteringTextInputFormatter.digitsOnly,
@@ -260,23 +289,23 @@ class _ProfileVerificationPageState extends State<ProfileVerificationPage> {
                           decoration: InputDecoration(
                             labelText: 'Current Pincode',
                             hintText: 'eg: 502032',
-                            labelStyle: TextStyle(
-                              color: Color(0xff0F3CC9),
+                            labelStyle: GoogleFonts.poppins(
+                              color: const Color(0xff0F3CC9),
                               fontSize: 14 * fontScale,
                               fontWeight: FontWeight.w600,
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(color: Color(0xff0056D6)),
+                              borderSide: const BorderSide(color: Color(0xff0056D6)),
                             ),
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return '';
                             } else if (value.length != 6) {
-                             // return 'Pincode must be 6 digits';
+                              return 'Pincode must be 6 digits';
                             }
-                          //  return null;
+                            return null;
                           },
                         ),
                       ),
@@ -284,16 +313,20 @@ class _ProfileVerificationPageState extends State<ProfileVerificationPage> {
                   ),
                 ),
               ),
-              SizedBox(height: screenHeight * 0.14),
+              if (!_isFormValid)
+                Padding(
+                  padding: const EdgeInsets.only(top: 25.0),
+                  child: Text(
+                    ' Required fields are incomplete.\n Fill them out to move forward. ',
+                    style: GoogleFonts.poppins(color: Color(0xffC90F0F),fontSize: 14,fontWeight: FontWeight.w600),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              SizedBox(height: screenHeight * 0.08),
               ElevatedButton(
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    
-                    // All validations passed
-                  }
-                },
+                onPressed: _onContinuePressed,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xff0F3CC9),
+                  backgroundColor: const Color(0xff0F3CC9),
                   minimumSize: Size(screenWidth * 0.7, screenHeight * 0.06),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -301,7 +334,7 @@ class _ProfileVerificationPageState extends State<ProfileVerificationPage> {
                 ),
                 child: Text(
                   'Continue',
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                     fontSize: 14 * fontScale,
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
